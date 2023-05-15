@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -272,7 +273,7 @@ public class ForceApi {
 			// See createSObject for note on streaming ambition
 			HttpResponse res =
 				apiRequest(new HttpRequest()
-					.url(uriBase()+"/sobjects/"+type+"/"+externalIdField+"/"+URI(null, externalIdValue, null).toString()+"?_HttpMethod=PATCH")
+					.url(uriBase()+"/sobjects/"+type+"/"+externalIdField+"/"+new URI(null, externalIdValue, null).toString()+"?_HttpMethod=PATCH")
 					.method("POST")
 					.header("Accept", "application/json")
 					.header("Content-Type", "application/json")
@@ -307,6 +308,8 @@ public class ForceApi {
 		} catch (JsonMappingException e) {
 			throw new ResourceException(e);
 		} catch (IOException e) {
+			throw new ResourceException(e);
+		} catch(URISyntaxException e) {
 			throw new ResourceException(e);
 		}
 	}
