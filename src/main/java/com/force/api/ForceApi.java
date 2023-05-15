@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -271,7 +272,7 @@ public class ForceApi {
 			// See createSObject for note on streaming ambition
 			HttpResponse res =
 				apiRequest(new HttpRequest()
-					.url(uriBase()+"/sobjects/"+type+"/"+externalIdField+"/"+URLEncoder.encode(externalIdValue,"UTF-8")+"?_HttpMethod=PATCH")
+					.url(uriBase()+"/sobjects/"+type+"/"+externalIdField+"/"+URI(null, externalIdValue, null).toString()+"?_HttpMethod=PATCH")
 					.method("POST")
 					.header("Accept", "application/json")
 					.header("Content-Type", "application/json")
